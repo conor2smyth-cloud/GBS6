@@ -195,6 +195,24 @@ a.button:hover, button.button:hover {
   justify-self: center;
 }
 
+.cocktail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+.cocktail {
+  background: rgba(15,15,15,0.8);
+  border: 1px solid #2b2b2b;
+  border-radius: 10px;
+  padding: 10px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.cocktail strong { color: var(--gold); }
+.cocktail em { color: var(--muted); }
+
+
 /* Modal */
 .modal {
   position: fixed;
@@ -295,5 +313,6 @@ a.button:hover, button.button:hover {
     transform: none;
   }
 }
+
 
 
