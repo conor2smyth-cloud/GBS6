@@ -9,16 +9,26 @@
 </head>
 <body>
   <!-- Splash Screen -->
-  <div id="splash">
-    <div class="inner">
-      <img src="Logo.png" class="logo" alt="GBS logo" />
-      <h2 class="gold">Welcome to GBS Bartending</h2>
-      <div class="divider"></div>
-      <p data-edit style="max-width: 500px; margin: 10px auto;">
-        Bartenders from Dundalk serving the Louth area and surrounds.<br>
-        Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.<br>
-        Focused on high-quality drinks and unforgettable service.
-      </p>
+  <!-- Splash Screen -->
+<div id="splash">
+  <div class="inner">
+    <img src="Logo.png" class="logo" alt="GBS logo" />
+    <h2 class="gold">Welcome to GBS Bartending</h2>
+    <div class="divider"></div>
+    <p data-edit style="max-width: 500px; margin: 20px auto; line-height:1.6;">
+      Bartenders from Dundalk serving the Louth area and surrounds.<br>
+      Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.<br>
+      Focused on high-quality drinks and unforgettable service.
+    </p>
+
+    <!-- Buttons directly below About section -->
+    <div class="splash-buttons" style="margin-top: 30px; display:flex; flex-direction:column; align-items:center; gap:12px;">
+      <a href="menus.html" class="button" id="enterBtn">Enter the Bar</a>
+      <button class="button" id="eventBtn" onclick="promptMember()">Tonight’s Event</button>
+    </div>
+  </div>
+</div>
+
     </div>
   </div>
 
@@ -62,4 +72,5 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
