@@ -4,7 +4,13 @@ const PASS = "0000"; // passcode for both member & admin access
 /* --- SPLASH SCREEN --- */
 document.addEventListener("DOMContentLoaded", () => {
   const splash = document.getElementById("splash");
-  
+
+  if (splash) {
+  setTimeout(() => {
+    splash.classList.add("hide");
+    document.getElementById("mainContent").style.display = "block";
+  }, 1000);
+  setTimeout(() => splash.remove(), 1700); 
   }
 });
 
@@ -257,4 +263,5 @@ function initRail() {
       (rail.scrollTop + 2) % (rail.scrollHeight - rail.clientHeight + 1);
   }, 60);
 }
+
 
