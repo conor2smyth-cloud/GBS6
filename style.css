@@ -68,7 +68,9 @@ body {
 }
 
 .hide {
-  animation: fadeOut 0.6s ease both;
+  opacity: 0;
+  visibility: hidden;
+  display: none;
 }
 
 @keyframes fadeOut {
@@ -278,3 +280,4 @@ a.button:hover, button.button:hover {
     transform: none;
   }
 }
+
