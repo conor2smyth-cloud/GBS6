@@ -4,12 +4,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const splash = document.getElementById("splash");
   const main = document.getElementById("mainContent");
   if (splash) {
-    setTimeout(() => {
-      splash.classList.add("hide");
-      if (main) main.style.display = "block";
-    }, 1000);
-    // Optional: completely remove splash after fade
-    setTimeout(() => splash.remove(), 2000);
+  const main = document.getElementById("mainContent");
+  const enterBtn = document.getElementById("enterBtn");
+  const eventBtn = document.getElementById("eventBtn");
+
+  function revealSite() {
+    splash.classList.add("hide");
+    if (main) main.style.display = "block";
+  }
+
+  if (enterBtn) enterBtn.addEventListener("click", revealSite);
+  if (eventBtn) eventBtn.addEventListener("click", revealSite);
+}
   }
 });
 
@@ -266,6 +272,7 @@ function initRail() {
       (rail.scrollTop + 2) % (rail.scrollHeight - rail.clientHeight + 1);
   }, 60);
 }
+
 
 
 
