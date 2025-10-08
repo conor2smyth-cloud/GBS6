@@ -35,6 +35,37 @@ function closeModal(id) {
   if (modal) modal.style.display = "none";
 }
 
+// ===== MODAL HANDLING =====
+function promptMember() {
+  document.getElementById("memberModal").style.display = "flex";
+}
+function promptAdmin() {
+  document.getElementById("adminModal").style.display = "flex";
+}
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+// ===== ACCESS UNLOCK =====
+function unlockMember() {
+  const pin = document.getElementById("memberPin").value;
+  if (pin === "0000") {
+    window.location.href = "tonight.html";
+  } else {
+    alert("Incorrect passcode.");
+  }
+}
+
+function unlockAdmin() {
+  const pin = document.getElementById("adminPin").value;
+  if (pin === "0000") {
+    window.location.href = "admin.html";
+  } else {
+    alert("Incorrect passcode.");
+  }
+}
+
+
 /* --- MEMBER LOCK (Tonight's Event) --- */
 function promptMember() {
   openModal("memberModal");
@@ -273,6 +304,7 @@ function initRail() {
       (rail.scrollTop + 2) % (rail.scrollHeight - rail.clientHeight + 1);
   }, 60);
 }
+
 
 
 
