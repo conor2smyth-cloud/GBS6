@@ -3,8 +3,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const splash = document.getElementById("splash");
   const main = document.getElementById("mainContent");
-  if (splash) {
-  const main = document.getElementById("mainContent");
   const enterBtn = document.getElementById("enterBtn");
   const eventBtn = document.getElementById("eventBtn");
 
@@ -13,8 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (main) main.style.display = "block";
   }
 
+  // Only attach listeners after DOM is ready
   if (enterBtn) enterBtn.addEventListener("click", revealSite);
   if (eventBtn) eventBtn.addEventListener("click", revealSite);
+});
+
 }
   }
 });
@@ -272,6 +273,7 @@ function initRail() {
       (rail.scrollTop + 2) % (rail.scrollHeight - rail.clientHeight + 1);
   }, 60);
 }
+
 
 
 
