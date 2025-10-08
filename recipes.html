@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipes | GBS Bartending</title>
+  <link rel="icon" href="Logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .recipes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .recipe-card {
+      background: rgba(20, 20, 20, 0.8);
+      border: 1px solid #2b2b2b;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s;
+    }
+    .recipe-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(255, 26, 26, 0.25);
+    }
+    .recipe-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .recipe-card h3 {
+      padding: 12px;
+      font-size: 1.1rem;
+      text-align: center;
+      color: var(--gold);
+    }
+
+    /* Modal */
+    #recipeModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    #recipeModal .content {
+      background: var(--box);
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 22px;
+      max-width: 720px;
+      width: 90%;
+      color: var(--ink);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+    #recipeModal img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 14px;
+    }
+    #recipeModal ul {
+      padding-left: 22px;
+      margin: 10px 0;
+    }
+    #recipeClose {
+      display: inline-block;
+      margin-top: 12px;
+      background: #333;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      color: #fff;
+    }
+  </style>
+</head>
+<body onload="initRecipes();">
+  <header class="header">
+    <div class="bar">
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="menus.html">Menus</a>
+      </div>
+      <img class="logo-small" src="Logo.png" alt="GBS logo" />
+      <div class="nav">
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="gallery.html">Gallery</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="banner" style="background:url('https://images.unsplash.com/photo-1582453898342-1f7f9a66e458?auto=format&fit=crop&w=1500&q=60') center/cover no-repeat;">
+      <h1>Our Recipes</h1>
+      <div class="now">Crafted with passion and precision</div>
+    </section>
+
+    <div class="recipes-grid">
+      <div
+        class="recipe-card"
+        data-title="Old Fashioned"
+        data-img="https://images.unsplash.com/photo-1622460736575-fd0d55613f39?auto=format&fit=crop&w=800&q=60"
+        data-ingredients="2 oz Bourbon|1 sugar cube|2 dashes Angostura bitters|Orange peel"
+        data-steps="Muddle sugar with bitters.|Add bourbon and ice.|Stir until chilled.|Garnish with orange peel."
+      >
+        <img src="https://images.unsplash.com/photo-1622460736575-fd0d55613f39?auto=format&fit=crop&w=800&q=60" />
+        <h3>Old Fashioned</h3>
+      </div>
+
+      <div
+        class="recipe-card"
+        data-title="Espresso Martini"
+        data-img="https://images.unsplash.com/photo-1570872629910-3cf4e1f2aafd?auto=format&fit=crop&w=800&q=60"
+        data-ingredients="2 oz Vodka|1 oz Coffee Liqueur|1 oz Fresh Espresso"
+        data-steps="Add ingredients to shaker with ice.|Shake hard until chilled.|Double strain into martini glass.|Garnish with coffee beans."
+      >
+        <img src="https://images.unsplash.com/photo-1570872629910-3cf4e1f2aafd?auto=format&fit=crop&w=800&q=60" />
+        <h3>Espresso Martini</h3>
+      </div>
+
+      <div
+        class="recipe-card"
+        data-title="Whiskey Sour"
+        data-img="https://images.unsplash.com/photo-1609630875172-7c7a4e5d2e5b?auto=format&fit=crop&w=800&q=60"
+        data-ingredients="2 oz Whiskey|3/4 oz Lemon Juice|1/2 oz Simple Syrup|1 Egg White (optional)"
+        data-steps="Dry shake ingredients.|Add ice and shake again.|Strain into glass.|Garnish with bitters."
+      >
+        <img src="https://images.unsplash.com/photo-1609630875172-7c7a4e5d2e5b?auto=format&fit=crop&w=800&q=60" />
+        <h3>Whiskey Sour</h3>
+      </div>
+
+      <div
+        class="recipe-card"
+        data-title="House Sour"
+        data-img="https://images.unsplash.com/photo-1616594039964-4a4f20cfb6b8?auto=format&fit=crop&w=800&q=60"
+        data-ingredients="2 oz Gin|3/4 oz Lime Juice|3/4 oz Honey Syrup|Splash Soda"
+        data-steps="Shake first three ingredients with ice.|Strain into glass with ice.|Top with soda and garnish."
+      >
+        <img src="https://images.unsplash.com/photo-1616594039964-4a4f20cfb6b8?auto=format&fit=crop&w=800&q=60" />
+        <h3>House Sour</h3>
+      </div>
+
+      <div
+        class="recipe-card"
+        data-title="Tropical Punch"
+        data-img="https://images.unsplash.com/photo-1603555639458-78ab57a82e83?auto=format&fit=crop&w=800&q=60"
+        data-ingredients="2 oz Rum|1 oz Pineapple Juice|1 oz Orange Juice|1/2 oz Grenadine"
+        data-steps="Add all to shaker with ice.|Shake lightly.|Pour into glass over ice.|Garnish with fruit."
+      >
+        <img src="https://images.unsplash.com/photo-1603555639458-78ab57a82e83?auto=format&fit=crop&w=800&q=60" />
+        <h3>Tropical Punch</h3>
+      </div>
+    </div>
+  </main>
+
+  <!-- Recipe Modal -->
+  <div id="recipeModal">
+    <div class="content">
+      <img id="recipeHero" src="" alt="Recipe image" />
+      <h2 id="recipeTitle">Title</h2>
+      <h3>Ingredients</h3>
+      <ul id="recipeIngredients"></ul>
+      <h3>Steps</h3>
+      <ol id="recipeSteps"></ol>
+      <div id="recipeClose">Close</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

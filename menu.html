@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menus | GBS Bartending</title>
+  <link rel="icon" href="Logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .accordion {
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    .accordion-item {
+      border-radius: 16px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      background: rgba(20,20,20,0.9);
+      border: 1px solid #2b2b2b;
+    }
+    .accordion-header {
+      cursor: pointer;
+      padding: 18px 22px;
+      font-size: 1.4rem;
+      font-family: "League Spartan", sans-serif;
+      font-weight: 700;
+      color: #ff1a1a;
+      letter-spacing: 0.5px;
+      background-size: cover;
+      background-position: center;
+      text-shadow: 0 0 6px rgba(0,0,0,0.5);
+      transition: background 0.3s;
+    }
+    .accordion-body {
+      display: none;
+      padding: 18px 24px;
+      color: var(--muted);
+      line-height: 1.6;
+      background: rgba(0,0,0,0.55);
+    }
+    .accordion-item.active .accordion-body {
+      display: block;
+      animation: fadeIn 0.4s ease both;
+    }
+    .accordion-item.active .accordion-header {
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="bar">
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="tonight.html">Tonight</a>
+      </div>
+      <img class="logo-small" src="Logo.png" alt="GBS logo" />
+      <div class="nav">
+        <a href="recipes.html">Recipes</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="gallery.html">Gallery</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="banner" style="background:url('https://images.unsplash.com/photo-1499028344343-cd173ffc68a9?auto=format&fit=crop&w=1500&q=60') center/cover no-repeat;">
+      <h1>Our Menus</h1>
+      <div class="now">Drink • Dine • Discover</div>
+    </section>
+
+    <div class="accordion">
+
+      <!-- Crowd Favorites -->
+      <div class="accordion-item">
+        <div class="accordion-header" style="background-image:url('https://images.unsplash.com/photo-1601925260346-6fbbf1f874ab?auto=format&fit=crop&w=1500&q=60');">
+          Crowd Favorites
+        </div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Old Fashioned</strong> – Bourbon, sugar, bitters, orange zest</li>
+            <li><strong>Espresso Martini</strong> – Vodka, espresso, coffee liqueur</li>
+            <li><strong>Whiskey Sour</strong> – Whiskey, lemon, sugar, egg white</li>
+            <li><strong>Classic Mojito</strong> – Rum, lime, mint, soda</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tropical -->
+      <div class="accordion-item">
+        <div class="accordion-header" style="background-image:url('https://images.unsplash.com/photo-1617196034984-1e6bb84776c5?auto=format&fit=crop&w=1500&q=60');">
+          Tropical
+        </div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Pina Colada</strong> – Rum, pineapple, coconut cream</li>
+            <li><strong>Mai Tai</strong> – Rum blend, lime, almond syrup</li>
+            <li><strong>Zombie</strong> – Mixed rums, citrus, grenadine</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Experimental -->
+      <div class="accordion-item">
+        <div class="accordion-header" style="background-image:url('https://images.unsplash.com/photo-1520942702018-0862200e6875?auto=format&fit=crop&w=1500&q=60');">
+          Experimental
+        </div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Smoked Maple Manhattan</strong> – Bourbon, maple, vermouth, smoke</li>
+            <li><strong>Cucumber Basil Collins</strong> – Gin, cucumber, basil, tonic</li>
+            <li><strong>Spicy Paloma</strong> – Tequila, grapefruit, chili, soda</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Simple -->
+      <div class="accordion-item">
+        <div class="accordion-header" style="background-image:url('https://images.unsplash.com/photo-1601612628450-f6e4c87a2e46?auto=format&fit=crop&w=1500&q=60');">
+          Simple
+        </div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Gin & Tonic</strong> – Gin, tonic, lime</li>
+            <li><strong>Vodka Soda</strong> – Vodka, soda, lemon</li>
+            <li><strong>Rum & Coke</strong> – Dark rum, cola, lime wedge</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Extravagant -->
+      <div class="accordion-item">
+        <div class="accordion-header" style="background-image:url('https://images.unsplash.com/photo-1560841850-9a1c443d8b68?auto=format&fit=crop&w=1500&q=60');">
+          Extravagant
+        </div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Gold Leaf Martini</strong> – Vodka, dry vermouth, edible gold</li>
+            <li><strong>Champagne Royale</strong> – Champagne, Chambord</li>
+            <li><strong>Truffle Negroni</strong> – Gin, Campari, vermouth, truffle essence</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Nibbles -->
+      <div class="accordion-item">
+        <div class="accordion-header" style="background-image:url('https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1500&q=60');">
+          Nibbles
+        </div>
+        <div class="accordion-body">
+          <ul>
+            <li><strong>Cheese Board</strong> – Irish cheddar, brie, grapes</li>
+            <li><strong>Mini Sliders</strong> – Beef, brioche, caramelized onions</li>
+            <li><strong>Marinated Olives</strong> – Citrus, herbs, garlic</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    // Accordion toggling
+    document.querySelectorAll(".accordion-header").forEach((header) => {
+      header.addEventListener("click", () => {
+        const item = header.parentElement;
+        document
+          .querySelectorAll(".accordion-item")
+          .forEach((i) => i.classList.remove("active"));
+        item.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>

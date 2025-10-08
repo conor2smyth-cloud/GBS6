@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GBS Bartending</title>
+  <link rel="icon" href="Logo.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div id="splash">
+    <div class="inner">
+      <img src="Logo.png" class="logo" alt="GBS logo" />
+      <h2 class="gold">Welcome to GBS Bartending</h2>
+      <div class="divider"></div>
+      <p data-edit style="max-width: 500px; margin: 10px auto;">
+        Bartenders from Dundalk serving the Louth area and surrounds.  
+        Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.  
+        Focused on high-quality drinks and unforgettable service.
+      </p>
+      <div style="margin-top: 40px;">
+        <a href="menus.html" class="button">Enter the Bar</a>
+      </div>
+      <div style="margin-top: 20px;">
+        <button class="button" onclick="promptMember()">Tonight’s Event</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden Member Access Modal -->
+  <div id="memberModal" class="modal">
+    <div class="panel box center">
+      <h2>Enter Passcode</h2>
+      <input id="memberPin" type="password" maxlength="4" placeholder="0000" class="pin" />
+      <div style="margin-top: 16px;">
+        <button class="button" onclick="unlockMember()">Unlock</button>
+        <button class="button" onclick="closeModal('memberModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Access Modal -->
+  <div id="adminModal" class="modal">
+    <div class="panel box center">
+      <h2>Admin Access</h2>
+      <input id="adminPin" type="password" maxlength="4" placeholder="0000" class="pin" />
+      <div style="margin-top: 16px;">
+        <button class="button" onclick="unlockAdmin()">Unlock</button>
+        <button class="button" onclick="closeModal('adminModal')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="adminBar" class="adminbar">
+    <button class="button" onclick="adminSave()">💾 Save Changes</button>
+    <button class="button" onclick="adminLogout()">🔒 Logout</button>
+  </div>
+
+  <div id="toast" class="toast">Changes saved!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>

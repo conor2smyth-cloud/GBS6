@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery | GBS Bartending</title>
+  <link rel="icon" href="Logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+      filter: brightness(1.1);
+    }
+    .caption {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 6px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="bar">
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="menus.html">Menus</a>
+      </div>
+      <img class="logo-small" src="Logo.png" alt="GBS logo" />
+      <div class="nav">
+        <a href="recipes.html">Recipes</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="banner" style="background:url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?auto=format&fit=crop&w=1500&q=60') center/cover no-repeat;">
+      <h1>Gallery</h1>
+      <div class="now">Good times, great company</div>
+    </section>
+
+    <div class="gallery-grid">
+      <div>
+        <img src="https://images.unsplash.com/photo-1551524164-687a55dd1126?auto=format&fit=crop&w=800&q=60" alt="Friends laughing at the bar" />
+        <div class="caption">A full house enjoying signature cocktails</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=60" alt="Wedding celebration drinks" />
+        <div class="caption">Wedding celebrations in full swing</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=800&q=60" alt="Cheers" />
+        <div class="caption">A quick toast before the music starts</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1524593656061-8630d0bdfa1c?auto=format&fit=crop&w=800&q=60" alt="Couple enjoying cocktails" />
+        <div class="caption">Couples and cocktails — the perfect pairing</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1564758561284-f0b5c0b0bb83?auto=format&fit=crop&w=800&q=60" alt="Party crowd" />
+        <div class="caption">Late-night laughter and clinking glasses</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1532635226-4c10cf9136a0?auto=format&fit=crop&w=800&q=60" alt="Guests at outdoor bar" />
+        <div class="caption">Outdoor events under the stars</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1573566472938-1cdb6b7dc8c5?auto=format&fit=crop&w=800&q=60" alt="Guests having fun" />
+        <div class="caption">Every crowd has its characters</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1500839941678-aae14dbfae1e?auto=format&fit=crop&w=800&q=60" alt="Dancing guests" />
+        <div class="caption">Dance floors, disco lights, and good spirits</div>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=60" alt="Bartender serving cocktails" />
+        <div class="caption">GBS bartenders in action — precision meets fun</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

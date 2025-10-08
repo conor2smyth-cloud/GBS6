@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | GBS Bartending</title>
+  <link rel="icon" href="Logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .service-card {
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid #2b2b2b;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(255, 26, 26, 0.25);
+    }
+    .service-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .service-card h3 {
+      font-family: "League Spartan", sans-serif;
+      color: var(--gold);
+      margin: 12px 16px 6px;
+      font-size: 1.3rem;
+    }
+    .service-card p {
+      margin: 0 16px 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+    .price {
+      margin: 0 16px 16px;
+      color: var(--accent);
+      font-weight: 700;
+      text-align: right;
+    }
+    .quiz-placeholder {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(30, 30, 30, 0.8);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      color: var(--gold);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="bar">
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="menus.html">Menus</a>
+      </div>
+      <img class="logo-small" src="Logo.png" alt="GBS logo" />
+      <div class="nav">
+        <a href="recipes.html">Recipes</a>
+        <a href="contact.html">Contact</a>
+        <a href="gallery.html">Gallery</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="banner" style="background:url('https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1500&q=60') center/cover no-repeat;">
+      <h1>Our Services</h1>
+      <div class="now">Bartenders for every occasion</div>
+    </section>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1573497019414-fb1f0e5eb7ef?auto=format&fit=crop&w=900&q=60" alt="Weddings" />
+        <h3>Weddings</h3>
+        <p data-edit>
+          Let our bartenders take care of the celebrations while you focus on your guests. 
+          Elegant setups, custom cocktails, and seamless service for your perfect day.
+        </p>
+        <div class="price">From €450</div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1515169067865-5387ec356754?auto=format&fit=crop&w=900&q=60" alt="Corporate" />
+        <h3>Corporate Events</h3>
+        <p data-edit>
+          Impress your clients and reward your team with a professional mobile bar service. 
+          Minimal footprint, maximum impact, and fully self-contained setups.
+        </p>
+        <div class="price">From €600</div>
+      </div>
+
+      <div class="service-card">
+        <img src="https://images.unsplash.com/photo-1584467735815-f778f274e7f8?auto=format&fit=crop&w=900&q=60" alt="Private Parties" />
+        <h3>Private Parties</h3>
+        <p data-edit>
+          From birthdays to backyard soirées, we bring the bar to you — fully equipped, 
+          fully staffed, and guaranteed to elevate the night.
+        </p>
+        <div class="price">From €350</div>
+      </div>
+    </div>
+
+    <div class="quiz-placeholder">
+      <!-- QUIZ PLACEHOLDER -->
+      <h2>Coming Soon: Event Planning Quiz</h2>
+      <p>
+        A quick interactive quiz that helps you pick the perfect package and get a tailored quote instantly.
+      </p>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

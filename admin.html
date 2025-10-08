@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | GBS Bartending</title>
+  <link rel="icon" href="Logo.png" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: var(--ink);
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+    th, td {
+      border-bottom: 1px solid #2b2b2b;
+      padding: 8px;
+    }
+    th {
+      text-align: left;
+      color: var(--gold);
+    }
+    input[type="text"], input[type="number"], input[type="date"] {
+      width: 100%;
+      padding: 6px;
+      background: #111;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 6px;
+    }
+    .admin-sections {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-top: 20px;
+    }
+    @media (min-width: 900px) {
+      .admin-sections {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .todo-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(20, 20, 20, 0.85);
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #2b2b2b;
+      margin-bottom: 6px;
+    }
+    .todo-item input[type="checkbox"] {
+      transform: scale(1.4);
+      cursor: pointer;
+    }
+    .calendar {
+      width: 100%;
+      border-radius: 16px;
+      background: rgba(20, 20, 20, 0.8);
+      padding: 16px;
+      border: 1px solid #2b2b2b;
+    }
+    .calendar h3 {
+      text-align: center;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .calendar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .calendar li {
+      padding: 8px;
+      border-bottom: 1px solid #2b2b2b;
+    }
+    .calendar li strong {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body onload="adminInit(); pettyInit(); loadTodo(); loadCalendar();">
+  <header class="header">
+    <div class="bar">
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="tonight.html">Tonight</a>
+      </div>
+      <img class="logo-small" src="Logo.png" alt="GBS logo" />
+      <div class="nav">
+        <a href="#" onclick="adminLogout(); return false;">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="banner" style="background:url('https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1500&q=60') center/cover no-repeat;">
+      <h1>Admin Dashboard</h1>
+      <div class="now">Manage Events • Track Cash • Stay Organised</div>
+    </section>
+
+    <div class="admin-sections">
+      <!-- Petty Cash Tracker -->
+      <div class="box">
+        <h2>Petty Cash Tracker</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Item</th>
+              <th>Amount (€)</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody id="pettyBody"></tbody>
+        </table>
+        <button class="button" onclick="addPettyRow()">+ Add Row</button>
+        <button class="button" onclick="pettySave()">💾 Save</button>
+        <p style="text-align:right;margin-top:8px;">
+          <strong>Total:</strong> €<span id="pettyTotal">0.00</span>
+        </p>
+      </div>
+
+      <!-- To-Do List -->
+      <div class="box">
+        <h2>To-Do List</h2>
+        <div id="todoList"></div>
+        <input type="text" id="newTodo" placeholder="Add a new task..." />
+        <button class="button" onclick="addTodo()">+ Add Task</button>
+      </div>
+
+      <!-- Calendar / Upcoming Events -->
+      <div class="box calendar">
+        <h3>Upcoming Events</h3>
+        <ul id="eventList"></ul>
+      </div>
+
+      <!-- Staff Availability -->
+      <div class="box calendar">
+        <h3>Staff Availability</h3>
+        <ul id="staffList"></ul>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="toast">Changes saved!</div>
+
+  <script src="app.js"></script>
+  <script>
+    /* --- To-Do List Functions --- */
+    function loadTodo() {
+      const list = JSON.parse(localStorage.getItem("gbs_todo") || "[]");
+      const box = document.getElementById("todoList");
+      box.innerHTML = "";
+      list.forEach((t, i) => {
+        const div = document.createElement("div");
+        div.className = "todo-item";
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = t.done;
+        cb.onchange = () => {
+          list[i].done = cb.checked;
+          localStorage.setItem("gbs_todo", JSON.stringify(list));
+          loadTodo();
+        };
+        const span = document.createElement("span");
+        span.textContent = t.text;
+        if (t.done) span.style.textDecoration = "line-through";
+        div.appendChild(cb);
+        div.appendChild(span);
+        box.appendChild(div);
+      });
+    }
+
+    function addTodo() {
+      const input = document.getElementById("newTodo");
+      const text = input.value.trim();
+      if (!text) return;
+      const list = JSON.parse(localStorage.getItem("gbs_todo") || "[]");
+      list.push({ text, done: false });
+      localStorage.setItem("gbs_todo", JSON.stringify(list));
+      input.value = "";
+      loadTodo();
+    }
+
+    /* --- Calendar & Staff --- */
+    function loadCalendar() {
+      const events = [
+        { date: "2025-10-12", name: "Joe & Ursula's Wedding" },
+        { date: "2025-10-28", name: "Corporate Mixology Workshop" },
+        { date: "2025-11-05", name: "Winter Gala Night" },
+      ];
+      const staff = [
+        { name: "Gerry", status: "Available" },
+        { name: "Aaron", status: "Off Duty" },
+        { name: "Lisa", status: "Available" },
+      ];
+      const el = document.getElementById("eventList");
+      const sl = document.getElementById("staffList");
+      el.innerHTML = "";
+      sl.innerHTML = "";
+      events.forEach(e => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${e.date}</strong> — ${e.name}`;
+        el.appendChild(li);
+      });
+      staff.forEach(s => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${s.name}</strong>: ${s.status}`;
+        sl.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
