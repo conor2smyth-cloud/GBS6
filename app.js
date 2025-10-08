@@ -1,5 +1,3 @@
-/* --- CONFIG --- */
-const PASS = "0000"; // passcode for both member & admin access
 
 /* --- SPLASH SCREEN --- */
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,6 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => splash.remove(), 2000);
   }
 });
+
+/* --- CONFIG --- */
+const PASS = "0000"; // passcode for both member & admin access
 
 
 /* --- MODALS --- */
@@ -265,6 +266,7 @@ function initRail() {
       (rail.scrollTop + 2) % (rail.scrollHeight - rail.clientHeight + 1);
   }, 60);
 }
+
 
 
 
