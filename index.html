@@ -15,27 +15,19 @@
       <h2 class="gold">Welcome to GBS Bartending</h2>
       <div class="divider"></div>
       <p data-edit style="max-width: 500px; margin: 10px auto;">
-        Bartenders from Dundalk serving the Louth area and surrounds.  
-        Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.  
+        Bartenders from Dundalk serving the Louth area and surrounds.<br>
+        Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.<br>
         Focused on high-quality drinks and unforgettable service.
       </p>
-      <div style="margin-top: 40px;">
-        <a href="menus.html" class="button">Enter the Bar</a>
-      </div>
-      <div style="margin-top: 20px;">
-        <button class="button" onclick="promptMember()">Tonight’s Event</button>
-      </div>
     </div>
   </div>
 
-  <!-- Main Content -->
-<div id="mainContent" style="display:none;">
-  <div class="center">
-    <a href="menus.html" class="button">Enter the Bar</a>
-    <button class="button" onclick="promptMember()">Tonight’s Event</button>
+  <!-- Main Content (hidden until splash ends) -->
+  <div id="mainContent" style="display:none; text-align:center; margin-top:40px;">
+    <a href="menus.html" class="button" style="margin:10px;">Enter the Bar</a>
+    <button class="button" onclick="promptMember()" style="margin:10px;">Tonight’s Event</button>
   </div>
-</div>
-  
+
   <!-- Hidden Member Access Modal -->
   <div id="memberModal" class="modal">
     <div class="panel box center">
@@ -70,4 +62,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-
