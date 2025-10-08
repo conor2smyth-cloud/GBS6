@@ -270,6 +270,21 @@ a.button:hover, button.button:hover {
   margin-top: -6px;
 }
 
+.accordion-header,
+.banner h1,
+.banner .now {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+.accordion-header {
+  color: var(--gold);
+}
+
+.banner .now {
+  color: var(--gold);
+}
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -280,4 +295,5 @@ a.button:hover, button.button:hover {
     transform: none;
   }
 }
+
 
