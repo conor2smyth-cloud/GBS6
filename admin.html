@@ -212,5 +212,31 @@
       });
     }
   </script>
+<!-- Member / Event Modal -->
+<div id="memberModal" class="modal">
+  <div class="panel box center">
+    <h2>Enter Passcode</h2>
+    <input id="memberPin" type="password" maxlength="4" placeholder="0000" class="pin" />
+    <div style="margin-top:16px;">
+      <button class="button" onclick="unlockMember()">Unlock</button>
+      <button class="button" onclick="closeModal('memberModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Modal (can exist globally but only reachable via index) -->
+<div id="adminModal" class="modal">
+  <div class="panel box center">
+    <h2>Admin Access</h2>
+    <input id="adminPin" type="password" maxlength="4" placeholder="0000" class="pin" />
+    <div style="margin-top:16px;">
+      <button class="button" onclick="unlockAdmin()">Unlock</button>
+      <button class="button" onclick="closeModal('adminModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+  
 </body>
 </html>
+
