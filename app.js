@@ -4,15 +4,17 @@ const PASS = "0000"; // passcode for both member & admin access
 /* --- SPLASH SCREEN --- */
 document.addEventListener("DOMContentLoaded", () => {
   const splash = document.getElementById("splash");
-
+  const main = document.getElementById("mainContent");
   if (splash) {
-  setTimeout(() => {
-    splash.classList.add("hide");
-    document.getElementById("mainContent").style.display = "block";
-  }, 1000);
-  setTimeout(() => splash.remove(), 1700); 
+    setTimeout(() => {
+      splash.classList.add("hide");
+      if (main) main.style.display = "block";
+    }, 1000);
+    // Optional: completely remove splash after fade
+    setTimeout(() => splash.remove(), 2000);
   }
 });
+
 
 /* --- MODALS --- */
 function openModal(id) {
@@ -263,5 +265,6 @@ function initRail() {
       (rail.scrollTop + 2) % (rail.scrollHeight - rail.clientHeight + 1);
   }, 60);
 }
+
 
 
