@@ -5,115 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tonight's Event | GBS Bartending</title>
   <link rel="icon" href="Logo.png" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20251009" />
   <style>
-    .event-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 40px;
-    }
-
-    .event-card {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .event-card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-    }
-
-    .event-card img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      filter: brightness(0.6);
-      transition: filter 0.3s ease;
-    }
-
-    .event-card:hover img {
-      filter: brightness(0.8);
-    }
-
-    .event-card h2 {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2rem;
-      color: #e63946;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-    }
-
-    .accordion-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-      background: rgba(20, 20, 20, 0.85);
-      padding: 0 20px;
-      border-radius: 12px;
-      margin-top: 10px;
-      color: #eee;
-      line-height: 1.6;
-    }
-
-    .accordion-content.open {
-      padding: 20px;
-      max-height: 600px;
-    }
-
-    .tip-logos img {
-      margin: 10px;
-      vertical-align: middle;
-    }
-
-    .photo-upload {
-      border: 2px dashed rgba(255,255,255,0.2);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      color: #ccc;
-    }
-
-    .photo-upload:hover {
-      border-color: #e63946;
-      color: #fff;
-    }
+    .event-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+    .event-card { position: relative; overflow: hidden; border-radius: 16px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .event-card:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+    .event-card img { width: 100%; height: 240px; object-fit: cover; filter: brightness(0.6); transition: filter 0.3s ease; }
+    .event-card:hover img { filter: brightness(0.8); }
+    .event-card h2 { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2rem; color: #e63946; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 6px rgba(0,0,0,0.8); }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.6s ease, opacity 0.4s ease; background: rgba(20,20,20,0.9); padding: 0 20px; border-radius: 12px; margin-top: 10px; color: #eee; line-height: 1.6; opacity: 0; }
+    .accordion-content.open { padding: 20px; max-height: 600px; opacity: 1; }
+    .tip-logos img { margin: 10px; vertical-align: middle; }
+    .photo-upload { border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; color: #ccc; }
+    .photo-upload:hover { border-color: #e63946; color: #fff; }
   </style>
 </head>
 <body onload="ensureMember();">
   <header class="header">
     <div class="bar">
-      <div class="nav">
-        <a href="index.html">Home</a>
-      </div>
+      <div class="nav"><a href="index.html">Home</a></div>
       <img class="logo-small" src="Logo.png" alt="GBS logo" />
-      <div class="nav">
-        <a href="menus.html">Menus</a>
-        <a href="recipes.html">Recipes</a>
-        <a href="services.html">Services</a>
-      </div>
+      <div class="nav"><a href="menus.html">Menus</a><a href="recipes.html">Recipes</a><a href="services.html">Services</a></div>
     </div>
   </header>
 
   <main class="container">
     <section class="banner" style="background:url('https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=1500&q=60') center/cover no-repeat;">
-      <h1>Tonight’s Event</h1>
-      <div class="now">Sip • Tip • Celebrate</div>
+      <h1>Tonight’s Event</h1><div class="now">Sip • Tip • Celebrate</div>
     </section>
 
     <div class="event-grid">
       <!-- SIP -->
       <div class="event-card" onclick="toggleAccordion('sipContent')">
-        <img src="https://images.unsplash.com/photo-1603052875591-2f2b7b1c2d76?auto=format&fit=crop&w=1000&q=60" alt="Cocktails" />
-        <h2>Sip</h2>
+        <img src="https://images.unsplash.com/photo-1603052875591-2f2b7b1c2d76?auto=format&fit=crop&w=1000&q=60" alt="Cocktails" /><h2>Sip</h2>
       </div>
       <div id="sipContent" class="accordion-content">
         <p>Explore tonight’s curated menu of cocktails, spirits, and craft brews — each designed to match the evening’s mood.</p>
@@ -126,8 +50,7 @@
 
       <!-- TIP -->
       <div class="event-card" onclick="toggleAccordion('tipContent')">
-        <img src="https://images.unsplash.com/photo-1585154295281-766c1e7dbf2b?auto=format&fit=crop&w=1000&q=60" alt="Tip" />
-        <h2>Tip</h2>
+        <img src="https://images.unsplash.com/photo-1585154295281-766c1e7dbf2b?auto=format&fit=crop&w=1000&q=60" alt="Tip" /><h2>Tip</h2>
       </div>
       <div id="tipContent" class="accordion-content">
         <p>All tips are appreciated and shared equally among our hardworking bartenders.</p>
@@ -141,8 +64,7 @@
 
       <!-- CELEBRATE -->
       <div class="event-card" onclick="toggleAccordion('celebrateContent')">
-        <img src="https://images.unsplash.com/photo-1528701800489-20be9e0a2c48?auto=format&fit=crop&w=1000&q=60" alt="Celebrate" />
-        <h2>Celebrate</h2>
+        <img src="https://images.unsplash.com/photo-1528701800489-20be9e0a2c48?auto=format&fit=crop&w=1000&q=60" alt="Celebrate" /><h2>Celebrate</h2>
       </div>
       <div id="celebrateContent" class="accordion-content">
         <h3>Joe & Ursula’s Wedding Party</h3>
@@ -153,7 +75,7 @@
     </div>
   </main>
 
-  <script src="app.js?v=20251008"></script>
+  <script src="app.js?v=20251009"></script>
   <script>
     function toggleAccordion(id) {
       document.querySelectorAll('.accordion-content').forEach(el => {
