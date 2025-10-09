@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GBS Bartending</title>
   <link rel="icon" href="Logo.png" />
-  <link rel="stylesheet" href="style.css?v=20251009" />
+  <link rel="stylesheet" href="style.css?v=20251010" />
+  <!-- build: 2025-10-09T22:45Z -->
 </head>
 <body>
   <!-- Splash Screen -->
@@ -19,8 +20,6 @@
         Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.<br>
         Focused on high-quality drinks and unforgettable service.
       </p>
-
-      <!-- Buttons below About -->
       <div class="splash-buttons" style="margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:12px;">
         <a href="menus.html" class="button" id="enterBtn">Enter the Bar</a>
         <button type="button" class="button" id="eventBtn" onclick="promptMember()">Tonight’s Event</button>
@@ -28,16 +27,14 @@
     </div>
   </div>
 
-  <!-- Header Navigation -->
+  <!-- Header -->
   <header class="header">
     <div class="bar">
       <div class="nav left-nav">
         <a href="index.html">Home</a>
         <a href="#" onclick="promptMember()">Tonight’s Event</a>
       </div>
-
       <img class="logo-small" src="Logo.png" alt="GBS logo" />
-
       <div class="nav right-nav">
         <a href="menus.html">Menus</a>
         <a href="recipes.html">Recipes</a>
@@ -76,9 +73,8 @@
     <button class="button" onclick="adminSave()">💾 Save Changes</button>
     <button class="button" onclick="adminLogout()">🔒 Logout</button>
   </div>
-
   <div id="toast" class="toast">Changes saved!</div>
 
-  <script src="app.js?v=20251009"></script>
+  <script src="app.js?v=20251010"></script>
 </body>
 </html>
