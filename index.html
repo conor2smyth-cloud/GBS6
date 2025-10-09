@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GBS Bartending</title>
   <link rel="icon" href="Logo.png" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20251009" />
 </head>
 <body>
   <!-- Splash Screen -->
@@ -20,7 +20,7 @@
         Focused on high-quality drinks and unforgettable service.
       </p>
 
-      <!-- Buttons directly below About section -->
+      <!-- Buttons below About -->
       <div class="splash-buttons" style="margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:12px;">
         <a href="menus.html" class="button" id="enterBtn">Enter the Bar</a>
         <button type="button" class="button" id="eventBtn" onclick="promptMember()">Tonight’s Event</button>
@@ -31,16 +31,13 @@
   <!-- Header Navigation -->
   <header class="header">
     <div class="bar">
-      <!-- Left Side -->
       <div class="nav left-nav">
         <a href="index.html">Home</a>
         <a href="#" onclick="promptMember()">Tonight’s Event</a>
       </div>
 
-      <!-- Center Logo -->
       <img class="logo-small" src="Logo.png" alt="GBS logo" />
 
-      <!-- Right Side -->
       <div class="nav right-nav">
         <a href="menus.html">Menus</a>
         <a href="recipes.html">Recipes</a>
@@ -52,12 +49,7 @@
     </div>
   </header>
 
-  <!-- Hidden main content (optional) -->
-  <div id="mainContent" style="display:none;text-align:center;margin-top:40px;">
-    <p>Welcome to the main site</p>
-  </div>
-
-  <!-- Member / Event Modal -->
+  <!-- Modals -->
   <div id="memberModal" class="modal">
     <div class="panel box center">
       <h2>Enter Passcode</h2>
@@ -69,7 +61,6 @@
     </div>
   </div>
 
-  <!-- Admin Access Modal -->
   <div id="adminModal" class="modal">
     <div class="panel box center">
       <h2>Admin Access</h2>
@@ -88,14 +79,6 @@
 
   <div id="toast" class="toast">Changes saved!</div>
 
-  <!-- Load the script (cache-busted) -->
-  <script src="app.js?v=20251008"></script>
+  <script src="app.js?v=20251009"></script>
 </body>
 </html>
-
-
-
-
-
-
-
