@@ -1,30 +1,29 @@
 
+/* ===============================
+   GBS Bartending - Master JS
+   =============================== */
+
 /* --- SPLASH SCREEN --- */
 document.addEventListener("DOMContentLoaded", () => {
   const splash = document.getElementById("splash");
   const main = document.getElementById("mainContent");
   const enterBtn = document.getElementById("enterBtn");
-  const eventBtn = document.getElementById("eventBtn");
 
   function revealSite() {
-    splash.classList.add("hide");
+    if (splash) splash.classList.add("hide");
     if (main) main.style.display = "block";
   }
 
-  // Only attach listeners after DOM is ready
-  if (enterBtn) enterBtn.addEventListener("click", revealSite);
-  if (eventBtn) eventBtn.addEventListener("click", revealSite);
-});
-
-}
-  }
+  if (enterBtn) enterBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    revealSite();
+  });
 });
 
 /* --- CONFIG --- */
-const PASS = "0000"; // passcode for both member & admin access
+const PASS = "0000"; // shared passcode for both member & admin
 
-
-/* --- MODALS --- */
+/* --- GENERIC MODAL HELPERS --- */
 function openModal(id) {
   const modal = document.getElementById(id);
   if (modal) modal.style.display = "flex";
@@ -35,38 +34,7 @@ function closeModal(id) {
   if (modal) modal.style.display = "none";
 }
 
-// ===== MODAL HANDLING =====
-function promptMember() {
-  document.getElementById("memberModal").style.display = "flex";
-}
-function promptAdmin() {
-  document.getElementById("adminModal").style.display = "flex";
-}
-function closeModal(id) {
-  document.getElementById(id).style.display = "none";
-}
-
-// ===== ACCESS UNLOCK =====
-function unlockMember() {
-  const pin = document.getElementById("memberPin").value;
-  if (pin === "0000") {
-    window.location.href = "tonight.html";
-  } else {
-    alert("Incorrect passcode.");
-  }
-}
-
-function unlockAdmin() {
-  const pin = document.getElementById("adminPin").value;
-  if (pin === "0000") {
-    window.location.href = "admin.html";
-  } else {
-    alert("Incorrect passcode.");
-  }
-}
-
-
-/* --- MEMBER LOCK (Tonight's Event) --- */
+/* --- MEMBER (TONIGHT’S EVENT) ACCESS --- */
 function promptMember() {
   openModal("memberModal");
 }
@@ -74,20 +42,22 @@ function promptMember() {
 function unlockMember() {
   const value = document.getElementById("memberPin").value.trim();
   if (value === PASS) {
-    sessionStorage.setItem("gbs_member", "1");
-    window.location = "tonight.html";
+    sessionStorage.setItem("gbs_member_ok", "true");
+    closeModal("memberModal");
+    window.location.href = "tonight.html";
   } else {
-    alert("Incorrect code. Please try again.");
+    alert("Incorrect passcode.");
   }
 }
 
 function ensureMember() {
-  if (sessionStorage.getItem("gbs_member") !== "1") {
-    window.location = "index.html#members-only";
+  if (sessionStorage.getItem("gbs_member_ok") !== "true") {
+    alert("Access restricted. Please enter via the Tonight’s Event portal.");
+    window.location.href = "index.html";
   }
 }
 
-/* --- ADMIN LOCK --- */
+/* --- ADMIN ACCESS --- */
 function promptAdmin() {
   openModal("adminModal");
 }
@@ -95,16 +65,32 @@ function promptAdmin() {
 function unlockAdmin() {
   const value = document.getElementById("adminPin").value.trim();
   if (value === PASS) {
-    sessionStorage.setItem("gbs_admin", "1");
-    enableEditing();
+    sessionStorage.setItem("gbs_admin_ok", "true");
     closeModal("adminModal");
+    window.location.href = "admin.html";
   } else {
-    alert("Incorrect admin code.");
+    alert("Incorrect admin passcode.");
   }
 }
 
+function adminInit() {
+  const ok = sessionStorage.getItem("gbs_admin_ok");
+  if (ok !== "true") {
+    alert("Admin access only. Please log in from the home page.");
+    window.location.href = "index.html";
+  }
+}
+
+function adminLogout() {
+  sessionStorage.removeItem("gbs_admin_ok");
+  disableEditing();
+  alert("You have been logged out.");
+  window.location.href = "index.html";
+}
+
+/* --- INLINE EDITING FOR ADMINS --- */
 function isAdmin() {
-  return sessionStorage.getItem("gbs_admin") === "1";
+  return sessionStorage.getItem("gbs_admin_ok") === "true";
 }
 
 function enableEditing() {
@@ -115,12 +101,6 @@ function enableEditing() {
   });
   const toolbar = document.getElementById("adminBar");
   if (toolbar) toolbar.style.display = "flex";
-
-  // Restore saved edits
-  document.querySelectorAll("[id][data-edit]").forEach((el) => {
-    const v = localStorage.getItem("gbs_edit_" + el.id);
-    if (v) el.innerHTML = v;
-  });
 }
 
 function disableEditing() {
@@ -130,11 +110,6 @@ function disableEditing() {
   });
   const toolbar = document.getElementById("adminBar");
   if (toolbar) toolbar.style.display = "none";
-}
-
-function adminInit() {
-  if (isAdmin()) enableEditing();
-  else disableEditing();
 }
 
 function adminSave() {
@@ -148,11 +123,6 @@ function adminSave() {
   }
 }
 
-function adminLogout() {
-  sessionStorage.removeItem("gbs_admin");
-  disableEditing();
-}
-
 /* --- PETTY CASH TRACKER --- */
 function pettyInit() {
   const data = JSON.parse(localStorage.getItem("gbs_petty") || "[]");
@@ -162,6 +132,7 @@ function pettyInit() {
 
 function addPettyRow(r) {
   const tbody = document.getElementById("pettyBody");
+  if (!tbody) return;
   const tr = document.createElement("tr");
   ["date", "item", "amount", "cat"].forEach((k) => {
     const td = document.createElement("td");
@@ -202,7 +173,7 @@ function pettyTotal(show) {
   }
 }
 
-/* --- RECIPE MODAL --- */
+/* --- RECIPE POPUP MODAL --- */
 function initRecipes() {
   const cards = document.querySelectorAll(".recipe-card");
   const modal = document.getElementById("recipeModal");
@@ -250,7 +221,7 @@ function initRecipes() {
   });
 }
 
-/* --- EVENT GALLERY UPLOAD --- */
+/* --- EVENT PHOTO UPLOAD (upload.js functionality) --- */
 function initUpload() {
   const drop = document.getElementById("dropzone");
   const thumbs = document.getElementById("thumbs");
@@ -265,6 +236,7 @@ function initUpload() {
       img.style.width = "100%";
       img.style.borderRadius = "10px";
       img.style.border = "1px solid #333";
+      img.onload = () => URL.revokeObjectURL(img.src);
       thumbs.appendChild(img.cloneNode());
       rail.appendChild(img);
     });
@@ -295,7 +267,7 @@ function initUpload() {
   });
 }
 
-/* --- AUTO-SCROLL FOR RAIL --- */
+/* --- AUTO SCROLL FOR RAIL --- */
 function initRail() {
   const rail = document.getElementById("rail");
   if (!rail) return;
@@ -304,10 +276,3 @@ function initRail() {
       (rail.scrollTop + 2) % (rail.scrollHeight - rail.clientHeight + 1);
   }, 60);
 }
-
-
-
-
-
-
-
