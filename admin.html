@@ -22,7 +22,7 @@
       text-align: left;
       color: var(--gold);
     }
-    input[type="text"], input[type="number"], input[type="date"] {
+    input[type="text"], input[type="number"] {
       width: 100%;
       padding: 6px;
       background: #111;
@@ -44,42 +44,58 @@
     .todo-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
       background: rgba(20, 20, 20, 0.85);
       padding: 10px;
       border-radius: 10px;
       border: 1px solid #2b2b2b;
       margin-bottom: 6px;
+      opacity: 1;
+      transition: opacity 0.4s ease, transform 0.3s ease;
     }
-    .todo-item input[type="checkbox"] {
-      transform: scale(1.4);
-      cursor: pointer;
+    .todo-item.fade-out {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    .todo-item.fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(5px);}
+      to {opacity: 1; transform: translateY(0);}
     }
     .calendar {
-      width: 100%;
-      border-radius: 16px;
       background: rgba(20, 20, 20, 0.8);
       padding: 16px;
       border: 1px solid #2b2b2b;
+      border-radius: 16px;
     }
     .calendar h3 {
       text-align: center;
       color: var(--gold);
       margin-bottom: 10px;
     }
-    .calendar ul {
-      list-style: none;
-      padding: 0;
+    .toast {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--ink);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      animation: fadeInOut 2.5s ease;
     }
-    .calendar li {
-      padding: 8px;
-      border-bottom: 1px solid #2b2b2b;
-    }
-    .calendar li strong {
-      color: var(--accent);
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(10px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(10px); }
     }
   </style>
 </head>
+
 <body onload="adminInit(); pettyInit(); loadTodo(); loadCalendar();">
   <header class="header">
     <div class="bar">
@@ -104,13 +120,14 @@
       <!-- Petty Cash Tracker -->
       <div class="box">
         <h2>Petty Cash Tracker</h2>
-        <table>
+        <table id="pettyTable">
           <thead>
             <tr>
-              <th>Date</th>
               <th>Item</th>
-              <th>Amount (€)</th>
-              <th>Category</th>
+              <th>Amount</th>
+              <th>Price (€)</th>
+              <th>Staff</th>
+              <th>Paid</th>
             </tr>
           </thead>
           <tbody id="pettyBody"></tbody>
@@ -128,48 +145,162 @@
         <div id="todoList"></div>
         <input type="text" id="newTodo" placeholder="Add a new task..." />
         <button class="button" onclick="addTodo()">+ Add Task</button>
+
+        <h3 style="margin-top:20px;color:var(--gold);">Completed Tasks</h3>
+        <div id="completedTasks"></div>
       </div>
 
-      <!-- Calendar / Upcoming Events -->
-      <div class="box calendar">
+      <!-- Upcoming Events -->
+      <div class="box calendar" style="grid-column:1 / -1;">
         <h3>Upcoming Events</h3>
-        <ul id="eventList"></ul>
-      </div>
-
-      <!-- Staff Availability -->
-      <div class="box calendar">
-        <h3>Staff Availability</h3>
-        <ul id="staffList"></ul>
+        <table id="eventTable">
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Date</th>
+              <th>Event</th>
+              <th>Host</th>
+              <th>Numbers</th>
+              <th>Staff</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="eventList"></tbody>
+        </table>
       </div>
     </div>
   </main>
 
-  <div id="toast" class="toast">Changes saved!</div>
+  <div id="toast" class="toast">✅ Task Completed</div>
 
   <script src="app.js"></script>
+
   <script>
-    /* --- To-Do List Functions --- */
+    /* --- Petty Cash Table --- */
+    function pettyInit() {
+      const data = JSON.parse(localStorage.getItem("gbs_petty") || "[]");
+      const body = document.getElementById("pettyBody");
+      body.innerHTML = "";
+      data.forEach(addPettyRow);
+      pettyTotal();
+    }
+
+    function addPettyRow(r = {}) {
+      const body = document.getElementById("pettyBody");
+      const tr = document.createElement("tr");
+
+      ["item", "amount", "price", "staff"].forEach((k) => {
+        const td = document.createElement("td");
+        const i = document.createElement("input");
+        i.type = k === "amount" || k === "price" ? "number" : "text";
+        i.value = r[k] || "";
+        i.oninput = pettyTotal;
+        td.appendChild(i);
+        tr.appendChild(td);
+      });
+
+      const tdPaid = document.createElement("td");
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = r.paid || false;
+      tdPaid.appendChild(cb);
+      tr.appendChild(tdPaid);
+      body.appendChild(tr);
+    }
+
+    function pettySave() {
+      const rows = [...document.querySelectorAll("#pettyBody tr")];
+      const data = rows.map((tr) => {
+        const [i, a, p, s] = [...tr.querySelectorAll("input[type='text'], input[type='number']")].map((x) => x.value);
+        const paid = tr.querySelector("input[type='checkbox']").checked;
+        return { item: i, amount: a, price: p, staff: s, paid };
+      });
+      localStorage.setItem("gbs_petty", JSON.stringify(data));
+      pettyTotal(true);
+    }
+
+    function pettyTotal(show) {
+      let total = 0;
+      [...document.querySelectorAll("#pettyBody tr")].forEach((tr) => {
+        const price = parseFloat(tr.querySelectorAll("input[type='number']")[1]?.value || "0");
+        if (!isNaN(price)) total += price;
+      });
+      document.getElementById("pettyTotal").textContent = total.toFixed(2);
+      if (show) showToast("💾 Petty Cash Saved");
+    }
+
+    /* --- To-Do List with Completed Section --- */
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.style.display = "block";
+      setTimeout(() => (toast.style.display = "none"), 2500);
+    }
+
     function loadTodo() {
       const list = JSON.parse(localStorage.getItem("gbs_todo") || "[]");
-      const box = document.getElementById("todoList");
-      box.innerHTML = "";
+      const done = JSON.parse(localStorage.getItem("gbs_done") || "[]");
+      const todoDiv = document.getElementById("todoList");
+      const completedDiv = document.getElementById("completedTasks");
+      todoDiv.innerHTML = "";
+      completedDiv.innerHTML = "";
+
       list.forEach((t, i) => {
         const div = document.createElement("div");
-        div.className = "todo-item";
+        div.className = "todo-item fade-in";
+
+        const left = document.createElement("div");
+        left.style.display = "flex";
+        left.style.alignItems = "center";
+        left.style.gap = "10px";
+
         const cb = document.createElement("input");
         cb.type = "checkbox";
         cb.checked = t.done;
         cb.onchange = () => {
-          list[i].done = cb.checked;
+          t.done = cb.checked;
+          if (cb.checked) {
+            const completedAt = new Date().toLocaleString();
+            done.push({ ...t, date: completedAt });
+            localStorage.setItem("gbs_done", JSON.stringify(done));
+            showToast("✅ Task Completed");
+          }
+          list.splice(i, 1);
           localStorage.setItem("gbs_todo", JSON.stringify(list));
           loadTodo();
         };
+
         const span = document.createElement("span");
         span.textContent = t.text;
         if (t.done) span.style.textDecoration = "line-through";
-        div.appendChild(cb);
+
+        const del = document.createElement("button");
+        del.textContent = "❌";
+        del.className = "button small";
+        del.onclick = () => {
+          div.classList.add("fade-out");
+          setTimeout(() => {
+            list.splice(i, 1);
+            localStorage.setItem("gbs_todo", JSON.stringify(list));
+            loadTodo();
+          }, 400);
+        };
+
+        left.appendChild(cb);
+        left.appendChild(span);
+        div.appendChild(left);
+        div.appendChild(del);
+        todoDiv.appendChild(div);
+      });
+
+      done.forEach((t) => {
+        const div = document.createElement("div");
+        div.className = "todo-item fade-in";
+        const span = document.createElement("span");
+        span.textContent = `${t.text}  —  ✅ ${t.date}`;
+        span.style.color = "#888";
         div.appendChild(span);
-        box.appendChild(div);
+        completedDiv.appendChild(div);
       });
     }
 
@@ -184,59 +315,25 @@
       loadTodo();
     }
 
-    /* --- Calendar & Staff --- */
+    /* --- Events Table --- */
     function loadCalendar() {
       const events = [
-        { date: "2025-10-12", name: "Joe & Ursula's Wedding" },
-        { date: "2025-10-28", name: "Corporate Mixology Workshop" },
-        { date: "2025-11-05", name: "Winter Gala Night" },
-      ];
-      const staff = [
-        { name: "Gerry", status: "Available" },
-        { name: "Aaron", status: "Off Duty" },
-        { name: "Lisa", status: "Available" },
+        { day: "Sat", date: "2025-10-12", event: "Joe & Ursula's Wedding", host: "Joe", numbers: "120", staff: "Gerry, Aaron", details: "Evening cocktails" },
+        { day: "Fri", date: "2025-10-28", event: "Corporate Mixology Workshop", host: "Louth Business Network", numbers: "40", staff: "Lisa, Aaron", details: "Team-building" },
+        { day: "Wed", date: "2025-11-05", event: "Winter Gala Night", host: "Town Hall", numbers: "300", staff: "Full Crew", details: "Formal bar setup" },
       ];
       const el = document.getElementById("eventList");
-      const sl = document.getElementById("staffList");
       el.innerHTML = "";
-      sl.innerHTML = "";
-      events.forEach(e => {
-        const li = document.createElement("li");
-        li.innerHTML = `<strong>${e.date}</strong> — ${e.name}`;
-        el.appendChild(li);
-      });
-      staff.forEach(s => {
-        const li = document.createElement("li");
-        li.innerHTML = `<strong>${s.name}</strong>: ${s.status}`;
-        sl.appendChild(li);
+      events.forEach((e) => {
+        const tr = document.createElement("tr");
+        ["day", "date", "event", "host", "numbers", "staff", "details"].forEach((k) => {
+          const td = document.createElement("td");
+          td.textContent = e[k];
+          tr.appendChild(td);
+        });
+        el.appendChild(tr);
       });
     }
   </script>
-<!-- Member / Event Modal -->
-<div id="memberModal" class="modal">
-  <div class="panel box center">
-    <h2>Enter Passcode</h2>
-    <input id="memberPin" type="password" maxlength="4" placeholder="0000" class="pin" />
-    <div style="margin-top:16px;">
-      <button class="button" onclick="unlockMember()">Unlock</button>
-      <button class="button" onclick="closeModal('memberModal')">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!-- Admin Modal (can exist globally but only reachable via index) -->
-<div id="adminModal" class="modal">
-  <div class="panel box center">
-    <h2>Admin Access</h2>
-    <input id="adminPin" type="password" maxlength="4" placeholder="0000" class="pin" />
-    <div style="margin-top:16px;">
-      <button class="button" onclick="unlockAdmin()">Unlock</button>
-      <button class="button" onclick="closeModal('adminModal')">Cancel</button>
-    </div>
-  </div>
-</div>
-
-  
 </body>
 </html>
-
