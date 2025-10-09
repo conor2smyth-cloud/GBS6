@@ -8,132 +8,92 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Splash Screen -->
+  <div id="splash" style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;text-align:center;">
+    <div class="inner">
+      <img src="Logo.png" class="logo" alt="GBS logo" style="max-width:180px;margin-bottom:10px;" />
+      <h2 class="gold">Welcome to GBS Bartending</h2>
+      <div class="divider"></div>
+      <p data-edit style="max-width:500px;margin:20px auto;line-height:1.6;">
+        Bartenders from Dundalk serving the Louth area and surrounds.<br>
+        Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.<br>
+        Focused on high-quality drinks and unforgettable service.
+      </p>
 
-<!-- SPLASH SCREEN -->
-<div id="splash" style="display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;text-align:center;">
-  <div class="inner">
-    <img src="Logo.png" class="logo" alt="GBS logo" style="max-width:180px;margin-bottom:10px;" />
-    <h2 class="gold">Welcome to GBS Bartending</h2>
-    <div class="divider"></div>
-    <p data-edit style="max-width:500px;margin:20px auto;line-height:1.6;">
-      Bartenders from Dundalk serving the Louth area and surrounds.<br>
-      Decades of combined experience with a portable bar setup that’s elegant, compact, and fully plumbed.<br>
-      Focused on high-quality drinks and unforgettable service.
-    </p>
-
-    <div class="splash-buttons" style="margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:12px;">
-      <a href="#" class="button" id="enterBtn">Enter the Bar</a>
-      <button class="button" id="eventBtn" onclick="promptMember()">Tonight’s Event</button>
+      <!-- Buttons directly below About section -->
+      <div class="splash-buttons" style="margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <a href="menus.html" class="button" id="enterBtn">Enter the Bar</a>
+        <button type="button" class="button" id="eventBtn" onclick="promptMember()">Tonight’s Event</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="bar">
-    <!-- Left -->
-    <div class="nav left-nav">
-      <a href="index.html">Home</a>
-      <a href="#" onclick="promptMember()">Tonight’s Event</a>
+  <!-- Header Navigation -->
+  <header class="header">
+    <div class="bar">
+      <!-- Left Side -->
+      <div class="nav left-nav">
+        <a href="index.html">Home</a>
+        <a href="#" onclick="promptMember()">Tonight’s Event</a>
+      </div>
+
+      <!-- Center Logo -->
+      <img class="logo-small" src="Logo.png" alt="GBS logo" />
+
+      <!-- Right Side -->
+      <div class="nav right-nav">
+        <a href="menus.html">Menus</a>
+        <a href="recipes.html">Recipes</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#" onclick="promptAdmin()">Admin</a>
+      </div>
     </div>
+  </header>
 
-    <!-- Center -->
-    <img class="logo-small" src="Logo.png" alt="GBS logo" />
+  <!-- Hidden main content (optional) -->
+  <div id="mainContent" style="display:none;text-align:center;margin-top:40px;">
+    <p>Welcome to the main site</p>
+  </div>
 
-    <!-- Right -->
-    <div class="nav right-nav">
-      <a href="menus.html">Menus</a>
-      <a href="recipes.html">Recipes</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="#" onclick="promptAdmin()">Admin</a>
+  <!-- Member / Event Modal -->
+  <div id="memberModal" class="modal">
+    <div class="panel box center">
+      <h2>Enter Passcode</h2>
+      <input id="memberPin" type="password" maxlength="4" placeholder="0000" class="pin" />
+      <div style="margin-top:16px;">
+        <button type="button" class="button" onclick="unlockMember()">Unlock</button>
+        <button type="button" class="button" onclick="closeModal('memberModal')">Cancel</button>
+      </div>
     </div>
   </div>
-</header>
 
-<!-- MAIN CONTENT (hidden until splash closed) -->
-<div id="mainContent" style="display:none;text-align:center;margin-top:40px;">
-  <p>Welcome to the main site</p>
-</div>
-
-<!-- MODALS -->
-<div id="memberModal" class="modal">
-  <div class="panel box center">
-    <h2>Enter Passcode</h2>
-    <input id="memberPin" type="password" maxlength="4" placeholder="0000" class="pin" />
-    <div style="margin-top:16px;">
-      <button class="button" onclick="unlockMember()">Unlock</button>
-      <button class="button" onclick="closeModal('memberModal')">Cancel</button>
+  <!-- Admin Access Modal -->
+  <div id="adminModal" class="modal">
+    <div class="panel box center">
+      <h2>Admin Access</h2>
+      <input id="adminPin" type="password" maxlength="4" placeholder="0000" class="pin" />
+      <div style="margin-top:16px;">
+        <button type="button" class="button" onclick="unlockAdmin()">Unlock</button>
+        <button type="button" class="button" onclick="closeModal('adminModal')">Cancel</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="adminModal" class="modal">
-  <div class="panel box center">
-    <h2>Admin Access</h2>
-    <input id="adminPin" type="password" maxlength="4" placeholder="0000" class="pin" />
-    <div style="margin-top:16px;">
-      <button class="button" onclick="unlockAdmin()">Unlock</button>
-      <button class="button" onclick="closeModal('adminModal')">Cancel</button>
-    </div>
+  <div id="adminBar" class="adminbar">
+    <button class="button" onclick="adminSave()">💾 Save Changes</button>
+    <button class="button" onclick="adminLogout()">🔒 Logout</button>
   </div>
-</div>
 
-<!-- Admin tools (hidden by default) -->
-<div id="adminBar" class="adminbar">
-  <button class="button" onclick="adminSave()">💾 Save Changes</button>
-  <button class="button" onclick="adminLogout()">🔒 Logout</button>
-</div>
+  <div id="toast" class="toast">Changes saved!</div>
 
-<div id="toast" class="toast">Changes saved!</div>
-
-<!-- SCRIPT -->
-<script src="app.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const splash = document.getElementById("splash");
-  const main = document.getElementById("mainContent");
-  const enterBtn = document.getElementById("enterBtn");
-
-  if (enterBtn) {
-    enterBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      splash.classList.add("hide");
-      if (main) main.style.display = "block";
-    });
-  }
-});
-
-// Passcode modals
-function promptMember() {
-  document.getElementById("memberModal").style.display = "flex";
-}
-function promptAdmin() {
-  document.getElementById("adminModal").style.display = "flex";
-}
-function closeModal(id) {
-  document.getElementById(id).style.display = "none";
-}
-function unlockMember() {
-  const pin = document.getElementById("memberPin").value;
-  if (pin === "0000") {
-    window.location.href = "tonight.html";
-  } else {
-    alert("Incorrect passcode.");
-  }
-}
-function unlockAdmin() {
-  const pin = document.getElementById("adminPin").value;
-  if (pin === "0000") {
-    window.location.href = "admin.html";
-  } else {
-    alert("Incorrect passcode.");
-  }
-}
-</script>
+  <!-- Load the script (cache-busted) -->
+  <script src="app.js?v=20251008"></script>
 </body>
 </html>
+
+
 
 
 
